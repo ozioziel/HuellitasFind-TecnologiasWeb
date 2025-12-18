@@ -1,38 +1,186 @@
-# Vue 3 + Vite
+# Vue 3 + Vite – HuellitasFind
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Este proyecto utiliza **Vue 3** con **Vite** para el frontend y se integra con un backend en **Node.js** para la comunicación con un **Arduino** y un módulo **GPS NEO-8M** mediante puerto serie y WebSockets.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+---
 
+## Requisitos previos
 
+* **Node.js** (versión actual recomendada)
 
----------------------------INTALACION DEL VUE---------------------------
-1. instalar Node.js de https://nodejs.org/en/download/current
-2. Iniciar el instalador msl
-3. Agregarlo al path
-4. Colocar en la linea de comandos npm install -g @vue/cli
-5. Creamemos un proyecto de vue con npm create 
-6. Se coloca que se use vue y javascript
+  * Descargar desde: [https://nodejs.org/en/download/current](https://nodejs.org/en/download/current)
+  * Durante la instalación:
 
-------------------------------Correr EL CODIGO----------------------
-Para correr el codigo se necesita estar en la direccion de Huellitas-Find, dentro este proyecto se ejecuta el siguiente comando:
+    * Aceptar el instalador
+    * Marcar la opción **Add to PATH**
 
+* **npm** (incluido con Node.js)
 
---npm run dev
+---
 
-Nos debera mostrar lo siguiente:
+## Instalación de Vue
 
+1. Instalar Vue CLI de forma global:
 
-ROLLDOWN-VITE v7.2.2  ready in 10339 ms
+   ```bash
+   npm install -g @vue/cli
+   ```
 
-  ➜  Local:   http://localhost:5173/
-  ➜  Network: use --host to expose
-  ➜  press h + enter to show help
+2. Crear el proyecto con Vite:
 
-y ejecutamos en el navegador el enlace que nos proprociona http://localhost:5173/
+   ```bash
+   npm create vite@latest
+   ```
 
+3. Seleccionar:
 
-----------------------------POR IMPLEMENTAR-------------------
+   * Framework: **Vue**
+   * Variante: **JavaScript**
 
+4. Entrar al proyecto e instalar dependencias iniciales:
 
-En la misma carpeta de HuellitasFind se encuentra la imagen de los circuitos para la conexion del modulo neo 8m con gps al arduino.
+   ```bash
+   cd HuellitasFind
+   npm install
+   ```
+
+---
+
+## Ejecutar el proyecto (modo desarrollo)
+
+Ubicarse dentro de la carpeta **HuellitasFind** y ejecutar:
+
+```bash
+npm run dev
+```
+
+Salida esperada:
+
+```
+ROLLDOWN-VITE v7.2.2  ready in xxxx ms
+
+➜  Local:   http://localhost:5173/
+➜  Network: use --host to expose
+➜  press h + enter to show help
+```
+
+Abrir en el navegador:
+
+```
+http://localhost:5173/
+```
+
+---
+
+## Compilación para producción
+
+Genera los archivos optimizados para producción:
+
+```bash
+npm run build
+```
+
+Los archivos se crearán en la carpeta `dist/`.
+
+---
+
+## Dependencias adicionales (Backend y comunicación)
+
+Estas librerías se utilizan para la comunicación con Arduino, GPS y el intercambio de datos con el frontend.
+
+### 1. serialport y parser-readline
+
+```bash
+npm install serialport @serialport/parser-readline
+```
+
+**Descripción:**
+
+* `serialport`: permite la comunicación con dispositivos conectados por puerto serie (Arduino).
+* `@serialport/parser-readline`: facilita la lectura de datos línea por línea enviados desde el Arduino.
+
+Uso típico: lectura de coordenadas GPS enviadas por el módulo NEO-8M.
+
+---
+
+### 2. express
+
+```bash
+npm install express
+```
+
+**Descripción:**
+
+* Framework backend para Node.js.
+* Se utiliza para crear un servidor HTTP que actúa como puente entre el frontend (Vue) y el hardware.
+
+---
+
+### 3. cors
+
+```bash
+npm install cors
+```
+
+**Descripción:**
+
+* Permite solicitudes entre distintos orígenes (por ejemplo, frontend en `localhost:5173` y backend en otro puerto).
+* Evita errores de seguridad CORS en el navegador.
+
+---
+
+### 4. ws (WebSocket)
+
+```bash
+npm install ws
+```
+
+**Descripción:**
+
+* Implementa comunicación en tiempo real mediante WebSockets.
+* Se utiliza para enviar las coordenadas GPS del Arduino al frontend sin necesidad de recargar la página.
+
+---
+
+### 5. axios
+
+```bash
+npm install axios
+```
+
+**Descripción:**
+
+* Cliente HTTP para realizar peticiones desde el frontend.
+* Se usa para consumir APIs del backend o servicios externos (por ejemplo, APIs de mapas o procesamiento de datos).
+
+---
+
+## Hardware
+
+En la carpeta **HuellitasFind** se incluye una imagen con el **diagrama de conexión** del módulo **GPS NEO-8M** con el **Arduino**.
+
+Esta conexión permite:
+
+* Obtener latitud y longitud
+* Enviar los datos por puerto serie al backend
+* Mostrar la ubicación en el frontend (por ejemplo, en Google Maps)
+
+---
+
+## Por implementar
+
+* Visualización del recorrido GPS
+* Manejo de errores de conexión con el Arduino
+* Almacenamiento de ubicaciones
+* Mejorar la UI para seguimiento en tiempo real
+
+---
+
+## Notas
+
+* Asegurarse de que el puerto serie del Arduino sea correcto según el sistema operativo.
+* Ejecutar el backend con permisos adecuados para acceder al puerto serie (especialmente en Linux).
+
+---
+
+Proyecto desarrollado con **Vue 3 + Vite + Node.js**.
